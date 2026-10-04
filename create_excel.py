@@ -57,7 +57,6 @@ headers1 = [
     ("หุ้น สอ.กฟผ. (บ./ด.)", 18),
     ("กองทุน RMF (บ./ด.)", 16),
     ("ประกันเดิม 3 ฉบับ (บ./ด.)", 18),
-    ("ฝากพิเศษ สอ. (บ./ด.)", 16),
     ("รวมหักเงินเดือนประจำ", 20),
     ("บำนาญใหม่ (โบนัส)", 18),
     ("รวมจ่ายทั้งปี (บาท)", 20),
@@ -76,29 +75,29 @@ for col_idx, (h_text, width) in enumerate(headers1, start=2):
 ws1.row_dimensions[start_row].height = 36
 
 raw_data_s1 = [
-    (1, 38, 63000, 20000, 2000, 9583, 0, 0, "เริ่มแผน: สอ. 20k/ด. ล็อกเป้า 4M, RMF 2k/ด., PVD 15%"),
-    (2, 39, 66150, 20000, 2000, 9583, 0, 0, "ฐานเงินเดือนโต 5% ต่อปี"),
-    (3, 40, 69458, 20000, 2000, 9583, 0, 0, "สะสมหุ้น สอ. ต่อเนื่อง"),
-    (4, 41, 72930, 20000, 2000, 10000, 0, 0, "ปรับเบี้ยประกันสุขภาพตามช่วงอายุ"),
-    (5, 42, 76577, 20000, 2000, 10000, 0, 0, "ปีสุดท้ายที่ส่ง สอ.กฟผ. ครบเป้าหมายเงินต้น 4,000,000 บ."),
-    (6, 43, 80406, 0, 24000, 10000, 0, 0, "หยุดส่ง สอ. (ปันผล 15k/ด. โอนให้แม่ 100%), เร่ง RMF เป็น 24k/ด."),
-    (7, 44, 84426, 0, 24000, 10000, 0, 0, "เร่งสปีดหุ้นโลกผ่าน PVD 15% + RMF 24k"),
-    (8, 45, 88647, 0, 24000, 10000, 0, 0, "ช่วงสะสมสินทรัพย์เติบโตสูง"),
-    (9, 46, 93080, 0, 24000, 10667, 0, 0, "ปรับเบี้ยประกันสุขภาพตามช่วงอายุ 46-50 ปี"),
-    (10, 47, 97734, 0, 24000, 10667, 0, 0, "เตรียมแตะเพดานเงินเดือน กฟผ."),
-    (11, 48, 100000, 0, 24000, 10667, 0, 0, "ฐานเงินเดือนแตะเพดาน 100,000 บ. (PVD หักคงที่ 15,000 บ./ด.)"),
-    (12, 49, 100000, 0, 24000, 10667, 0, 0, "ปีสุดท้ายของการเร่ง RMF 24k/ด."),
-    (13, 50, 100000, 0, 16000, 10667, 0, 100000, "RMF ลดเหลือ 16k/ด. + ซื้อบำนาญใหม่ #3 จ่าย 100k/ปี จากโบนัส (ปี 1/5)"),
-    (14, 51, 100000, 0, 16000, 11500, 0, 100000, "บำนาญใหม่ #3 จ่าย 100k/ปี (ปี 2/5) | ปรับเบี้ยสุขภาพช่วง 51-55"),
-    (15, 52, 100000, 0, 16000, 11500, 0, 100000, "บำนาญใหม่ #3 จ่าย 100k/ปี (ปี 3/5)"),
-    (16, 53, 100000, 0, 16000, 11500, 0, 200000, "ซื้อบำนาญ 85/5 เพิ่ม 100k/ปี (ปี 1/5) ซ้อนบำนาญ #3 (ปี 4/5) รวม 200k/ปี"),
-    (17, 54, 100000, 0, 16000, 11500, 0, 200000, "บำนาญ 85/5 (ปี 2/5) + บำนาญ #3 (ปี 5/5 งวดสุดท้าย) รวม 200k/ปี"),
-    (18, 55, 100000, 0, 16000, 11500, 0, 100000, "สับ PVD+RMF เข้าตราสารหนี้ | บำนาญ 85/5 (ปี 3/5)"),
-    (19, 56, 100000, 0, 16000, 12500, 0, 100000, "บำนาญ 85/5 (ปี 4/5) | ปรับเบี้ยสุขภาพช่วง 56-60"),
-    (20, 57, 100000, 0, 16000, 12500, 0, 100000, "ส่งประกันสะสมทรัพย์งวดสุดท้าย | บำนาญ 85/5 งวดสุดท้าย (ปี 5/5)"),
-    (21, 58, 100000, 0, 16000, 9167, 0, 0, "หยุดส่งสะสมทรัพย์ (รับเงินคืน 250k เข้า e-Savings) เหลือส่งบำนาญเดิม+สุขภาพ"),
-    (22, 59, 100000, 0, 16000, 9167, 0, 0, "เตรียมความพร้อมก่อนเกษียณ 1 ปี (วางแผนโยก PVD เข้า สอ. ภายใน 60 วัน)"),
-    (23, 60, 100000, 0, 16000, 9167, 0, 0, "ปีสุดท้าย: ส่งบำนาญเดิมงวดสุดท้าย + รับเงินชดเชยเกษียณ 400 วัน 1.312M + โยก PVD 5M ฝากพิเศษเกษียณสุข")
+    (1, 38, 63000, 20000, 2000, 9583, 0, "เริ่มแผน: สอ. 20k/ด. ล็อกเป้า 4M, RMF 2k/ด., PVD 15%"),
+    (2, 39, 66150, 20000, 2000, 9583, 0, "ฐานเงินเดือนโต 5% ต่อปี"),
+    (3, 40, 69458, 20000, 2000, 9583, 0, "สะสมหุ้น สอ. ต่อเนื่อง"),
+    (4, 41, 72930, 20000, 2000, 10000, 0, "ปรับเบี้ยประกันสุขภาพตามช่วงอายุ"),
+    (5, 42, 76577, 20000, 2000, 10000, 0, "ปีสุดท้ายที่ส่ง สอ.กฟผ. ครบเป้าหมายเงินต้น 4,000,000 บ."),
+    (6, 43, 80406, 0, 24000, 10000, 0, "หยุดส่ง สอ. (ปันผล 15k/ด. โอนให้แม่ 100%), เร่ง RMF เป็น 24k/ด."),
+    (7, 44, 84426, 0, 24000, 10000, 0, "เร่งสปีดหุ้นโลกผ่าน PVD 15% + RMF 24k"),
+    (8, 45, 88647, 0, 24000, 10000, 0, "ช่วงสะสมสินทรัพย์เติบโตสูง"),
+    (9, 46, 93080, 0, 24000, 10667, 0, "ปรับเบี้ยประกันสุขภาพตามช่วงอายุ 46-50 ปี"),
+    (10, 47, 97734, 0, 24000, 10667, 0, "เตรียมแตะเพดานเงินเดือน กฟผ."),
+    (11, 48, 100000, 0, 24000, 10667, 0, "ฐานเงินเดือนแตะเพดาน 100,000 บ. (PVD หักคงที่ 15,000 บ./ด.)"),
+    (12, 49, 100000, 0, 24000, 10667, 0, "ปีสุดท้ายของการเร่ง RMF 24k/ด."),
+    (13, 50, 100000, 0, 16000, 10667, 100000, "RMF ลดเหลือ 16k/ด. + ซื้อบำนาญใหม่ #3 จ่าย 100k/ปี จากโบนัส (ปี 1/5)"),
+    (14, 51, 100000, 0, 16000, 11500, 100000, "บำนาญใหม่ #3 จ่าย 100k/ปี (ปี 2/5) | ปรับเบี้ยสุขภาพช่วง 51-55"),
+    (15, 52, 100000, 0, 16000, 11500, 100000, "บำนาญใหม่ #3 จ่าย 100k/ปี (ปี 3/5)"),
+    (16, 53, 100000, 0, 16000, 11500, 200000, "ซื้อบำนาญ 85/5 เพิ่ม 100k/ปี (ปี 1/5) ซ้อนบำนาญ #3 (ปี 4/5) รวม 200k/ปี"),
+    (17, 54, 100000, 0, 16000, 11500, 200000, "บำนาญ 85/5 (ปี 2/5) + บำนาญ #3 (ปี 5/5 งวดสุดท้าย) รวม 200k/ปี"),
+    (18, 55, 100000, 0, 16000, 11500, 100000, "สับ PVD+RMF เข้าตราสารหนี้ | บำนาญ 85/5 (ปี 3/5)"),
+    (19, 56, 100000, 0, 16000, 12500, 100000, "บำนาญ 85/5 (ปี 4/5) | ปรับเบี้ยสุขภาพช่วง 56-60"),
+    (20, 57, 100000, 0, 16000, 12500, 100000, "ส่งประกันสะสมทรัพย์งวดสุดท้าย | บำนาญ 85/5 งวดสุดท้าย (ปี 5/5)"),
+    (21, 58, 100000, 0, 16000, 9167, 0, "หยุดส่งสะสมทรัพย์ (รับเงินคืน 250k เข้า e-Savings) เหลือส่งบำนาญเดิม+สุขภาพ"),
+    (22, 59, 100000, 0, 16000, 9167, 0, "เตรียมความพร้อมก่อนเกษียณ 1 ปี (วางแผนโยก PVD เข้า สอ. ภายใน 60 วัน)"),
+    (23, 60, 100000, 0, 16000, 9167, 0, "ปีสุดท้าย: ส่งบำนาญเดิมงวดสุดท้าย + รับเงินชดเชยเกษียณ 400 วัน 1.312M + โยก PVD 5M ฝากพิเศษเกษียณสุข")
 ]
 
 for row_idx, r in enumerate(raw_data_s1, start=6):
@@ -106,7 +105,7 @@ for row_idx, r in enumerate(raw_data_s1, start=6):
     bg_color = ZEBRA_BG if row_idx % 2 == 0 else WHITE
     fill = PatternFill(start_color=bg_color, end_color=bg_color, fill_type="solid")
     
-    seq, age, salary, coop, rmf, ins_orig, coop_spec, bonus_pen, note = r
+    seq, age, salary, coop, rmf, ins_orig, bonus_pen, note = r
     
     # Check milestone highlight
     is_milestone = age in [42, 43, 48, 53, 57, 60]
@@ -168,42 +167,36 @@ for row_idx, r in enumerate(raw_data_s1, start=6):
     c.alignment = Alignment(horizontal="right", vertical="center")
     c.font = normal_font; c.fill = fill; c.border = thin_border
     
-    # Col K: Coop Special
-    c = ws1.cell(row=row_idx, column=11, value=coop_spec)
-    c.number_format = "#,##0"
-    c.alignment = Alignment(horizontal="right", vertical="center")
-    c.font = normal_font; c.fill = fill; c.border = thin_border
-    
-    # Col L: Total Monthly Deductions = SUM(G:K)
-    c = ws1.cell(row=row_idx, column=12, value=f"=SUM(G{row_idx}:K{row_idx})")
+    # Col K: Total Monthly Deductions = SUM(G:J)
+    c = ws1.cell(row=row_idx, column=11, value=f"=SUM(G{row_idx}:J{row_idx})")
     c.number_format = "#,##0"
     c.alignment = Alignment(horizontal="right", vertical="center")
     c.font = bold_font; c.fill = PatternFill(start_color=ACCENT_BLUE, end_color=ACCENT_BLUE, fill_type="solid")
     c.border = thin_border
     
-    # Col M: Bonus Pension Annual
-    c = ws1.cell(row=row_idx, column=13, value=bonus_pen)
+    # Col L: Bonus Pension Annual
+    c = ws1.cell(row=row_idx, column=12, value=bonus_pen)
     c.number_format = "#,##0"
     c.alignment = Alignment(horizontal="right", vertical="center")
     c.font = normal_font; c.fill = fill; c.border = thin_border
     
-    # Col N: Total Annual Payment = L*12 + M
-    c = ws1.cell(row=row_idx, column=14, value=f"=L{row_idx}*12+M{row_idx}")
+    # Col M: Total Annual Payment = K*12 + L
+    c = ws1.cell(row=row_idx, column=13, value=f"=K{row_idx}*12+L{row_idx}")
     c.number_format = "#,##0"
     c.alignment = Alignment(horizontal="right", vertical="center")
     c.font = Font(name="Arial", size=10, bold=True, color=EMERALD_HEADER)
     c.fill = PatternFill(start_color=ACCENT_GREEN, end_color=ACCENT_GREEN, fill_type="solid")
     c.border = thin_border
     
-    # Col O: Net Disposable Income = F - N
-    c = ws1.cell(row=row_idx, column=15, value=f"=F{row_idx}-N{row_idx}")
+    # Col N: Net Disposable Income = F - M
+    c = ws1.cell(row=row_idx, column=14, value=f"=F{row_idx}-M{row_idx}")
     c.number_format = "#,##0"
     c.alignment = Alignment(horizontal="right", vertical="center")
     c.font = Font(name="Arial", size=10, bold=True, color="047857")
     c.fill = fill; c.border = thin_border
     
-    # Col P: Notes
-    c = ws1.cell(row=row_idx, column=16, value=note)
+    # Col O: Notes
+    c = ws1.cell(row=row_idx, column=15, value=note)
     c.alignment = Alignment(horizontal="left", vertical="center")
     c.font = normal_font; c.fill = fill; c.border = thin_border
 
@@ -222,19 +215,18 @@ ws1.cell(row=tot_row, column=7, value=f"=SUM(G6:G{tot_row-1})*12").number_format
 ws1.cell(row=tot_row, column=8, value=f"=SUM(H6:H{tot_row-1})*12").number_format = "#,##0"
 ws1.cell(row=tot_row, column=9, value=f"=SUM(I6:I{tot_row-1})*12").number_format = "#,##0"
 ws1.cell(row=tot_row, column=10, value=f"=SUM(J6:J{tot_row-1})*12").number_format = "#,##0"
-ws1.cell(row=tot_row, column=11, value=f"=SUM(K6:K{tot_row-1})*12").number_format = "#,##0"
-ws1.cell(row=tot_row, column=12, value="-").alignment = Alignment(horizontal="center", vertical="center")
+ws1.cell(row=tot_row, column=11, value="-").alignment = Alignment(horizontal="center", vertical="center")
+ws1.cell(row=tot_row, column=12, value=f"=SUM(L6:L{tot_row-1})").number_format = "#,##0"
 ws1.cell(row=tot_row, column=13, value=f"=SUM(M6:M{tot_row-1})").number_format = "#,##0"
 ws1.cell(row=tot_row, column=14, value=f"=SUM(N6:N{tot_row-1})").number_format = "#,##0"
-ws1.cell(row=tot_row, column=15, value=f"=SUM(O6:O{tot_row-1})").number_format = "#,##0"
-ws1.cell(row=tot_row, column=16, value="ยอดรวมสะสมตลอด 23 ปี สู่เป้าหมาย 25 ล้านบาท").font = Font(name="Arial", size=10, italic=True)
+ws1.cell(row=tot_row, column=15, value="ยอดรวมสะสมตลอด 23 ปี สู่เป้าหมาย 25 ล้านบาท").font = Font(name="Arial", size=10, italic=True)
 
-for col in range(2, 17):
+for col in range(2, 16):
     cell = ws1.cell(row=tot_row, column=col)
     cell.font = bold_font
     cell.fill = PatternFill(start_color="FEF3C7", end_color="FEF3C7", fill_type="solid")
     cell.border = total_border
-    if col in [4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15]:
+    if col in [4, 5, 6, 7, 8, 9, 10, 12, 13, 14]:
         cell.alignment = Alignment(horizontal="right", vertical="center")
 
 # Milestone Notes section below the table in Excel
@@ -512,21 +504,21 @@ with open(csv_file, "w", encoding="utf-8-sig", newline="") as f:
     writer = csv.writer(f)
     writer.writerow([
         "อายุ", "ฐานเงินเดือน", "โบนัสประจำปี(~2ด.)", "รวมรายได้ต่อปี",
-        "PVD_15%", "สหกรณ์_สอกฟผ", "RMF", "ประกันเดิม_3ฉบับ", "ฝากพิเศษ_สอกฟผ",
+        "PVD_15%", "สหกรณ์_สอกฟผ", "RMF", "ประกันเดิม_3ฉบับ",
         "รวมหักจากเงินเดือนประจำ", "บำนาญใหม่_หักจากโบนัสรายปี", "รวมจ่ายทั้งหมดต่อปี",
         "เงินเหลือใช้สุทธิ/ปี", "หมุดหมายสำคัญ"
     ])
     for r in raw_data_s1:
-        seq, age, salary, coop, rmf, ins_orig, coop_spec, bonus_pen, note = r
+        seq, age, salary, coop, rmf, ins_orig, bonus_pen, note = r
         bonus = salary * 2
         total_income = salary * 12 + bonus
         pvd = round(salary * 0.15)
-        monthly_deduct = pvd + coop + rmf + ins_orig + coop_spec
+        monthly_deduct = pvd + coop + rmf + ins_orig
         total_paid = monthly_deduct * 12 + bonus_pen
         net_disposable = total_income - total_paid
         writer.writerow([
             age, salary, bonus, total_income,
-            pvd, coop, rmf, ins_orig, coop_spec,
+            pvd, coop, rmf, ins_orig,
             monthly_deduct, bonus_pen, total_paid,
             net_disposable, note
         ])

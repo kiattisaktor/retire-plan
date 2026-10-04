@@ -237,7 +237,6 @@ function renderAccumulationTable(filterRange) {
         <td class="numeric">${r.coop > 0 ? formatNumber(r.coop) : '<span style="color:var(--text-dim);">-</span>'}</td>
         <td class="numeric">${formatNumber(r.rmf)}</td>
         <td class="numeric">${formatNumber(r.ins)}</td>
-        <td class="numeric">${r.coopSpec > 0 ? formatNumber(r.coopSpec) : '<span style="color:var(--text-dim);">-</span>'}</td>
         <td class="numeric" style="color: var(--cyan-500); font-weight: 600;">${formatNumber(r.monthlyTot)}</td>
         <td class="numeric">${r.bonusPen > 0 ? formatNumber(r.bonusPen) : '<span style="color:var(--text-dim);">-</span>'}</td>
         <td class="numeric" style="color: var(--emerald-400); font-weight: 700;">${formatNumber(r.annualTot)}</td>
