@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EGAT Retirement Blueprint - แผนการเงินเพื่อการเกษียณ 25 ล้านบาท</title>
+  <meta name="description" content="แดชบอร์ดจำลองและบริหารแผนการเงินเพื่อการเกษียณอายุ 25.00 ล้านบาท พนักงาน กฟผ. ตั้งแต่อายุ 38 ถึง 60 ปี พร้อมโครงสร้าง 6 ตะกร้าและท่อกระแสเงินสดคู่">
+  <link rel="stylesheet" href="style.css">
+  <script src="chart.min.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand-wrapper">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>EGAT Retirement Blueprint</h1>
+          <p>แผนแม่บทการเงินเพื่อการเกษียณ 25.00 ล้านบาท | อายุ 38 – 60 ปี</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-wrapper">
+    <!-- Hero KPI Cards -->
+    <section class="hero-kpis" aria-label="Key Performance Indicators">
+      <div class="kpi-card" style="--card-accent: var(--emerald-500);">
+        <div class="kpi-header">
+          <span class="kpi-title">สินทรัพย์เป้าหมายวันเกษียณ</span>
+          <span class="kpi-badge emerald">ครบอายุ 60 ปี</span>
+        </div>
+        <div class="kpi-value emerald" id="kpi-total-wealth">25,000,000 ฿</div>
+        <div class="kpi-footer">
+          <span>🛡️ จัดสรร 6 ตะกร้า + รวมเงินชดเชย กฟผ.</span>
+        </div>
+      </div>
+
+      <div class="kpi-card" style="--card-accent: var(--cyan-500);">
+        <div class="kpi-header">
+          <span class="kpi-title">กระแสเงินสดรับส่วนตัวสุทธิ</span>
+          <span class="kpi-badge cyan">ท่อที่ 2 (ส่วนตัว)</span>
+        </div>
+        <div class="kpi-value cyan" id="kpi-personal-income">52,291 ฿<span style="font-size: 0.95rem; font-weight: 500; color: var(--text-dim);"> /เดือน</span></div>
+        <div class="kpi-footer">
+          <span>กินอยู่ 35,000 + Surplus สุขภาพ 17,291 ฿</span>
+        </div>
+      </div>
+
+      <div class="kpi-card" style="--card-accent: var(--blue-500);">
+        <div class="kpi-header">
+          <span class="kpi-title">กระแสเงินสดดูแลคุณแม่</span>
+          <span class="kpi-badge">ท่อที่ 1 (แยกบัญชี)</span>
+        </div>
+        <div class="kpi-value white" id="kpi-mom-income">15,000 ฿<span style="font-size: 0.95rem; font-weight: 500; color: var(--text-dim);"> /เดือน</span></div>
+        <div class="kpi-footer">
+          <span>ปันผลหุ้น สอ.กฟผ. 4M @ 4.5% ปลอดภาษี</span>
+        </div>
+      </div>
+
+      <div class="kpi-card" style="--card-accent: var(--gold-500);">
+        <div class="kpi-header">
+          <span class="kpi-title">เงินชดเชยเกษียณ 400 วัน</span>
+          <span class="kpi-badge gold">กฟผ. สุทธิ</span>
+        </div>
+        <div class="kpi-value gold" id="kpi-severance">1,312,000 ฿</div>
+        <div class="kpi-footer">
+          <span>⭐ หลังหักภาษีใบแนบ สมทบเข้า e-Savings</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation Tabs -->
+    <nav class="tabs-nav" role="tablist">
+      <button class="tab-btn active" data-target="tab-overview" role="tab" id="tab-btn-overview">
+        📊 ภาพรวม 6 ตะกร้าสินทรัพย์
+      </button>
+      <button class="tab-btn" data-target="tab-accumulation" role="tab" id="tab-btn-accumulation">
+        📅 แผนสะสมรายปี (38 - 60 ปี)
+      </button>
+      <button class="tab-btn" data-target="tab-cashflow" role="tab" id="tab-btn-cashflow">
+        🔄 ท่อกระแสเงินสดคู่หลังเกษียณ
+      </button>
+      <button class="tab-btn" data-target="tab-drawdown" role="tab" id="tab-btn-drawdown">
+        🛡️ แผน Drawdown & ค่ารักษา
+      </button>
+      <button class="tab-btn" data-target="tab-simulator" role="tab" id="tab-btn-simulator">
+        🧮 เครื่องคิดเลขจำลองการเงิน
+      </button>
+    </nav>
+
+    <!-- TAB 1: OVERVIEW -->
+    <div class="tab-content active" id="tab-overview" role="tabpanel">
+      <div class="dashboard-grid">
+        <div class="panel-card col-6">
+          <div class="panel-title-wrapper">
+            <div>
+              <h2 class="panel-title">สัดส่วนพอร์ตสินทรัพย์ 25.00 ล้านบาท</h2>
+              <p class="panel-subtitle">กระจายความเสี่ยง 6 ตะกร้า เพื่อสร้างกระแสเงินสดการันตี</p>
+            </div>
+          </div>
+          <div class="chart-box">
+            <canvas id="chart-baskets"></canvas>
+          </div>
+          <div class="gold-banner">
+            <div>
+              <strong>★ สินทรัพย์สำรองพิเศษ (Wealth Buffer)</strong>
+              <div style="font-size: 0.825rem; color: var(--text-muted); margin-top: 2px;">
+                ทองคำแท่งบริสุทธิ์ 5 บาท ถือครองแยก 100% เป็นปราการด่านสุดท้าย
+              </div>
+            </div>
+            <div style="font-weight: 700; color: var(--gold-400); font-size: 1.1rem;">
+              ทองคำ 5 บาท
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-card col-6">
+          <div class="panel-title-wrapper">
+            <div>
+              <h2 class="panel-title">รายละเอียด 6 ตะกร้าสินทรัพย์วันเกษียณ</h2>
+              <p class="panel-subtitle">เงินต้นรวม 25 ล้านบาท ผลิตกระแสเงินสดเฉลี่ย 56,258 ฿/เดือน</p>
+            </div>
+          </div>
+          <div class="basket-list" id="basket-list-container">
+            <!-- Dynamically populated via app.js -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: ACCUMULATION (38-60) -->
+    <div class="tab-content" id="tab-accumulation" role="tabpanel">
+      <div class="dashboard-grid">
+        <div class="panel-card col-12">
+          <div class="panel-title-wrapper">
+            <div>
+              <h2 class="panel-title">แนวโน้มการออมและลงทุนรายปี (อายุ 38 – 60 ปี)</h2>
+              <p class="panel-subtitle">กลยุทธ์ Hybrid: หุ้น สอ. 5 ปีแรก -> เร่งหุ้นโลกผ่าน RMF 24k -> ล็อกบำนาญด้วยโบนัส -> สับเปลี่ยนเข้าตราสารหนี้</p>
+            </div>
+          </div>
+          <div class="chart-box-tall">
+            <canvas id="chart-accumulation"></canvas>
+          </div>
+        </div>
+
+        <div class="panel-card col-12">
+          <div class="table-filter-bar">
+            <div>
+              <h2 class="panel-title" style="margin-bottom: 4px;">ตารางแจกแจงรายจ่ายเพื่อการเกษียณ 23 ปี</h2>
+              <p class="panel-subtitle">รวมหักเงินเดือนประจำและบำนาญใหม่จากโบนัสรายปี (Ground Truth 100%)</p>
+            </div>
+            <div class="filter-pills" id="age-filter-pills">
+              <button class="filter-pill active" data-filter="all">ดูทั้งหมด 23 ปี</button>
+              <button class="filter-pill" data-filter="38-42">อายุ 38-42 (ฐานราก สอ.)</button>
+              <button class="filter-pill" data-filter="43-49">อายุ 43-49 (เร่ง RMF หุ้นโลก)</button>
+              <button class="filter-pill" data-filter="50-54">อายุ 50-54 (บำนาญใหม่)</button>
+              <button class="filter-pill" data-filter="55-60">อายุ 55-60 (Glide Path)</button>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table" id="accumulation-table">
+              <thead>
+                <tr>
+                  <th>อายุ</th>
+                  <th class="numeric">ฐานเงินเดือน</th>
+                  <th class="numeric">PVD 15%</th>
+                  <th class="numeric">หุ้น สอ.กฟผ.</th>
+                  <th class="numeric">RMF</th>
+                  <th class="numeric">ประกันเดิม 3 ฉบับ</th>
+                  <th class="numeric">ฝากพิเศษ สอ.</th>
+                  <th class="numeric" style="color: var(--cyan-500);">รวมหักเดือนประจำ</th>
+                  <th class="numeric">บำนาญใหม่ (โบนัส)</th>
+                  <th class="numeric" style="color: var(--emerald-400);">รวมจ่ายทั้งปี</th>
+                  <th>หมุดหมายสำคัญ</th>
+                </tr>
+              </thead>
+              <tbody id="accumulation-table-body">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: DUAL CASH FLOW -->
+    <div class="tab-content" id="tab-cashflow" role="tabpanel">
+      <div class="dashboard-grid">
+        <div class="panel-card col-6">
+          <div class="panel-title-wrapper">
+            <div>
+              <h2 class="panel-title">โครงสร้าง Dual Pipelines (สองท่อเงินสด)</h2>
+              <p class="panel-subtitle">แยกบัญชีคุณแม่ขาด 100% ไม่ปะปนกับกระแสเงินสดส่วนตัว</p>
+            </div>
+          </div>
+          
+          <div style="display: flex; flex-direction: column; gap: 1.25rem; margin-top: 1rem;">
+            <!-- Pipeline 1 -->
+            <div style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: var(--radius-md); padding: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <span style="font-weight: 700; color: #60a5fa; font-size: 1.05rem;">ท่อที่ 1: สำหรับคุณแม่ (แยกบัญชีขาด 100%)</span>
+                <span class="kpi-badge" style="background: rgba(59, 130, 246, 0.2); color: #93c5fd;">15,000 ฿/เดือน</span>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+                • มาจากเงินปันผลทุนเรือนหุ้น สอ.กฟผ. 4,000,000 บาท @ 4.5% ปลอดภาษี = 180,000 บาท/ปี<br>
+                • โอนตรงเข้าบัญชีคุณแม่เป็นค่ากินอยู่และเบี้ยหวัดรายเดือนจนถึงอายุ 98 ปี (พ.ศ. 2601)
+              </p>
+            </div>
+
+            <!-- Pipeline 2 -->
+            <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: var(--radius-md); padding: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <span style="font-weight: 700; color: var(--emerald-400); font-size: 1.05rem;">ท่อที่ 2: สำหรับส่วนตัวคุณ (เงินต้น 21M + บำนาญ 3 ฉบับ)</span>
+                <span class="kpi-badge emerald">52,291 ฿/เดือน</span>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+                • ดอกเบี้ย 5 ตะกร้าที่เหลือ (เงินต้น 21 ล้านบาท): <strong>41,258 ฿/เดือน</strong> (495,100 ฿/ปี)<br>
+                • บำนาญเดิม (เมืองไทยฯ): <strong>5,833 ฿/เดือน</strong> (70,000 ฿/ปี)<br>
+                • บำนาญใหม่ #3 (สะสม 50-54): <strong>2,700 ฿/เดือน</strong> (32,400 ฿/ปี)<br>
+                • บำนาญ 85/5 (สะสม 53-57): <strong>2,500 ฿/เดือน</strong> (30,000 ฿/ปี)<br>
+                • <strong>รวมรับส่วนตัว: 52,291 บาท/เดือน (627,500 บาท/ปี)</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-card col-6">
+          <div class="panel-title-wrapper">
+            <div>
+              <h2 class="panel-title">การจัดสรรงบประมาณส่วนตัวรายเดือน (52,291 ฿)</h2>
+              <p class="panel-subtitle">ปลอดภัยต่อ Medical Inflation สูงสุด 15 ปีแรกโดยไม่แตะเงินต้น 25M</p>
+            </div>
+          </div>
+
+          <div class="chart-box">
+            <canvas id="chart-budget-split"></canvas>
+          </div>
+
+          <div style="margin-top: 1rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div style="padding: 1rem; background: rgba(15, 23, 42, 0.6); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+              <div style="font-size: 0.8rem; color: var(--text-muted);">งบกินอยู่ประจำวัน</div>
+              <div style="font-size: 1.35rem; font-weight: 700; color: #ffffff;">35,000 ฿</div>
+              <div style="font-size: 0.75rem; color: var(--text-dim);">66.9% ของกระแสเงินสดรับ</div>
+            </div>
+            <div style="padding: 1rem; background: rgba(15, 23, 42, 0.6); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+              <div style="font-size: 0.8rem; color: var(--text-muted);">งบส่วนเกินเบี้ยสุขภาพ (Surplus)</div>
+              <div style="font-size: 1.35rem; font-weight: 700; color: var(--emerald-400);">17,291 ฿</div>
+              <div style="font-size: 0.75rem; color: var(--text-dim);">ปีละ 207,500 ฿ รองรับเบี้ยสุขภาพ</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: DRAWDOWN & HEALTHCARE -->
+    <div class="tab-content" id="tab-drawdown" role="tabpanel">
+      <div class="dashboard-grid">
+        <div class="panel-card col-12">
+          <div class="panel-title-wrapper">
+            <div>
+              <h2 class="panel-title">ลำดับการทยอยดึงเงินต้นมาใช้ (Drawdown Execution Protocol)</h2>
+              <p class="panel-subtitle">กลยุทธ์ป้องกันความเสี่ยง Medical Inflation และปกป้องเงินต้นตามช่วงอายุ</p>
+            </div>
+          </div>
+
+          <div class="protocol-card">
+            <div class="protocol-header">
+              <span style="font-weight: 700; font-size: 1.1rem; color: #60a5fa;">ระยะที่ 1: อายุ 60 – 70 ปี (Capital Preservation Phase)</span>
+              <span class="protocol-badge phase1">เงินต้นคงอยู่ครบ 100% (25.00M)</span>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">
+              • ใช้จ่ายเฉพาะดอกเบี้ยและบำนาญรับรวม 52,291 บาท/เดือน (เงินต้น 25 ล้านบาทคงไว้เต็มจำนวน)<br>
+              • เบี้ยประกันสุขภาพช่วงนี้อยู่ที่ 65,000 – 114,000 บาท/ปี ซึ่งงบ Surplus (207,500 บ./ปี) ครอบคลุมได้สบาย<br>
+              • เงินสดในตะกร้า 6 (2.5M) แบ่ง 500,000 บาทใส่บัญชีแยกเป็น <strong>กองทุนฉุกเฉินสำหรับคุณแม่ (ช่วงท่านอายุ 88–98 ปี)</strong>
+            </p>
+          </div>
+
+          <div class="protocol-card">
+            <div class="protocol-header">
+              <span style="font-weight: 700; font-size: 1.1rem; color: #fbbf24;">ระยะที่ 2: อายุ 71 – 79 ปี (Tier-1 Drawdown Phase)</span>
+              <span class="protocol-badge phase2">ทยอยดึงสลากออมทรัพย์ 3.0M</span>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">
+              • เบี้ยประกันสุขภาพผู้สูงอายุเริ่มแตะ 180,000 – 250,000+ บาท/ปี<br>
+              • สลากออมทรัพย์ 3,000,000 บาท เมื่อครบกำหนดไถ่ถอน ไม่ต้องซื้อต่อ ให้แปลงเป็นเงินสดทยอยดึงออกมาปีละ 300,000 – 350,000 บาท<br>
+              • นำเงินคืนประกันสะสมทรัพย์งวดสอง (250,000 บาท ตอนอายุ 62 ปี) ที่สะสมใน e-Savings มาสมทบกองทุนสุขภาพ
+            </p>
+          </div>
+
+          <div class="protocol-card">
+            <div class="protocol-header">
+              <span style="font-weight: 700; font-size: 1.1rem; color: #f87171;">ระยะที่ 3: อายุ 80 ปีขึ้นไป (Core Liquidation Phase)</span>
+              <span class="protocol-badge phase3">ปลดล็อก MMF และพันธบัตร</span>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">
+              • คุณแม่อายุครบ 98 ปี (ปี พ.ศ. 2601) ทุนเรือนหุ้นสหกรณ์ 4,000,000 บาท ปลดล็อกกลับมาเป็นสภาพคล่องส่วนตัวของคุณ<br>
+              • ทยอยไถ่ถอน Treasury MMF (4,000,000 บาท) และพันธบัตรรัฐบาล (5,500,000 บาท) ตามลำดับ<br>
+              • เงินฝากพิเศษ สอ.กฟผ. 6,000,000 บาท และทองคำแท่ง 5 บาท ทำหน้าที่เป็นปราการความมั่งคั่งด่านสุดท้ายของชีวิต
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: SIMULATOR -->
+    <div class="tab-content" id="tab-simulator" role="tabpanel">
+      <div class="dashboard-grid">
+        <div class="panel-card col-12">
+          <div class="panel-title-wrapper">
+            <div>
+              <h2 class="panel-title">Interactive Retirement Simulator</h2>
+              <p class="panel-subtitle">ทดลองปรับเปลี่ยนตัวแปรเพื่อดูความยืดหยุ่นของแผนการเงิน</p>
+            </div>
+          </div>
+
+          <div class="simulator-form">
+            <div class="form-group">
+              <div class="form-label">
+                <span>งบกินอยู่รายเดือนหลังเกษียณ</span>
+                <span id="val-living-exp" style="color: var(--emerald-400); font-weight: 700;">35,000 ฿</span>
+              </div>
+              <input type="range" class="slider-input" id="slider-living" min="20000" max="60000" step="1000" value="35000">
+              <span style="font-size: 0.75rem; color: var(--text-dim);">ปรับงบใช้จ่ายประจำวัน (เกณฑ์ปัจจุบัน 35k)</span>
+            </div>
+
+            <div class="form-group">
+              <div class="form-label">
+                <span>ผลตอบแทนเฉลี่ยพอร์ตเกษียณ (%/ปี)</span>
+                <span id="val-portfolio-yield" style="color: var(--cyan-500); font-weight: 700;">2.70%</span>
+              </div>
+              <input type="range" class="slider-input" id="slider-yield" min="1.5" max="5.0" step="0.1" value="2.7">
+              <span style="font-size: 0.75rem; color: var(--text-dim);">ผลตอบแทนสุทธิหลังหักภาษีของพอร์ต 25M</span>
+            </div>
+
+            <div class="form-group">
+              <div class="form-label">
+                <span>เงินบำนาญการันตี 3 ฉบับ (ต่อเดือน)</span>
+                <span id="val-pension-income" style="color: var(--gold-400); font-weight: 700;">11,033 ฿</span>
+              </div>
+              <input type="range" class="slider-input" id="slider-pension" min="5000" max="25000" step="500" value="11033">
+              <span style="font-size: 0.75rem; color: var(--text-dim);">กระแสเงินสดจากประกันบำนาญ (บำนาญเดิม+ใหม่+#3)</span>
+            </div>
+          </div>
+
+          <div class="sim-output-box">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; text-align: center;">
+              <div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.25rem;">กระแสเงินสดรับส่วนตัวรวม</div>
+                <div style="font-size: 1.8rem; font-weight: 700; color: var(--cyan-500);" id="sim-res-total-income">52,291 ฿</div>
+                <div style="font-size: 0.75rem; color: var(--text-dim);">ดอกเบี้ยพอร์ต 21M + บำนาญ 3 ฉบับ</div>
+              </div>
+              <div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.25rem;">งบกินอยู่รายเดือน</div>
+                <div style="font-size: 1.8rem; font-weight: 700; color: #ffffff;" id="sim-res-living">35,000 ฿</div>
+                <div style="font-size: 0.75rem; color: var(--text-dim);">ตามการปรับสไลเดอร์</div>
+              </div>
+              <div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.25rem;">เงินคงเหลือ Surplus ค่ารักษา</div>
+                <div style="font-size: 1.8rem; font-weight: 700; color: var(--emerald-400);" id="sim-res-surplus">+17,291 ฿</div>
+                <div style="font-size: 0.75rem; color: var(--text-dim);" id="sim-res-surplus-year">ปีละ 207,500 บาท</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div style="max-width: 800px; margin: 0 auto; line-height: 1.8;">
+      <strong>EGAT Retirement Financial Plan</strong> — วางแผนและจำลองกระแสเงินสดเพื่อการเกษียณอย่างมั่นคง<br>
+      เป้าหมายพอร์ต 25.00 ล้านบาท + ทองคำแท่ง 5 บาท | โครงสร้าง 6 ตะกร้าและท่อกระแสเงินสดคู่ (Dual Pipelines)
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

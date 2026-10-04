@@ -1,0 +1,12 @@
+{
+  "name": "retire-plan-dashboard",
+  "version": "1.0.0",
+  "description": "Interactive 25M THB Retirement Plan Dashboard for EGAT Employee",
+  "scripts": {
+    "dev": "npx -y serve . -p 3000",
+    "start": "npx -y serve . -p 3000"
+  },
+  "keywords": ["retirement", "egat", "financial-planning"],
+  "author": "",
+  "license": "ISC"
+}
