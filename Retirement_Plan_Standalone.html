@@ -758,9 +758,6 @@ body {
       <button class="tab-btn" data-target="tab-drawdown" role="tab" id="tab-btn-drawdown">
         🛡️ แผน Drawdown & ค่ารักษา
       </button>
-      <button class="tab-btn" data-target="tab-simulator" role="tab" id="tab-btn-simulator">
-        🧮 เครื่องคิดเลขจำลองการเงิน
-      </button>
     </nav>
 
     <!-- TAB 1: OVERVIEW -->
@@ -1010,69 +1007,6 @@ body {
         </div>
       </div>
     </div>
-
-    <!-- TAB 5: SIMULATOR -->
-    <div class="tab-content" id="tab-simulator" role="tabpanel">
-      <div class="dashboard-grid">
-        <div class="panel-card col-12">
-          <div class="panel-title-wrapper">
-            <div>
-              <h2 class="panel-title">Interactive Retirement Simulator</h2>
-              <p class="panel-subtitle">ทดลองปรับเปลี่ยนตัวแปรเพื่อดูความยืดหยุ่นของแผนการเงิน</p>
-            </div>
-          </div>
-
-          <div class="simulator-form">
-            <div class="form-group">
-              <div class="form-label">
-                <span>งบกินอยู่รายเดือนหลังเกษียณ</span>
-                <span id="val-living-exp" style="color: var(--emerald-400); font-weight: 700;">35,000 ฿</span>
-              </div>
-              <input type="range" class="slider-input" id="slider-living" min="20000" max="60000" step="1000" value="35000">
-              <span style="font-size: 0.75rem; color: var(--text-dim);">ปรับงบใช้จ่ายประจำวัน (เกณฑ์ปัจจุบัน 35k)</span>
-            </div>
-
-            <div class="form-group">
-              <div class="form-label">
-                <span>ผลตอบแทนเฉลี่ยพอร์ตเกษียณส่วนตัว (%/ปี)</span>
-                <span id="val-portfolio-yield" style="color: var(--cyan-500); font-weight: 700;">2.23%</span>
-              </div>
-              <input type="range" class="slider-input" id="slider-yield" min="1.5" max="5.0" step="0.01" value="2.23">
-              <span style="font-size: 0.75rem; color: var(--text-dim);">ผลตอบแทนสุทธิพอร์ตส่วนตัว 21M (เฉลี่ย 2.23%/ปี)</span>
-            </div>
-
-            <div class="form-group">
-              <div class="form-label">
-                <span>เงินบำนาญการันตี 3 ฉบับ (ต่อเดือน)</span>
-                <span id="val-pension-income" style="color: var(--gold-400); font-weight: 700;">11,033 ฿</span>
-              </div>
-              <input type="range" class="slider-input" id="slider-pension" min="5000" max="25000" step="500" value="11033">
-              <span style="font-size: 0.75rem; color: var(--text-dim);">กระแสเงินสดจากประกันบำนาญ (บำนาญเดิม+ใหม่+#3)</span>
-            </div>
-          </div>
-
-          <div class="sim-output-box">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; text-align: center;">
-              <div>
-                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.25rem;">กระแสเงินสดรับส่วนตัวรวม</div>
-                <div style="font-size: 1.8rem; font-weight: 700; color: var(--cyan-500);" id="sim-res-total-income">50,038 ฿</div>
-                <div style="font-size: 0.75rem; color: var(--text-dim);">ดอกเบี้ยพอร์ต 21M + บำนาญ 3 ฉบับ</div>
-              </div>
-              <div>
-                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.25rem;">งบกินอยู่รายเดือน</div>
-                <div style="font-size: 1.8rem; font-weight: 700; color: #ffffff;" id="sim-res-living">35,000 ฿</div>
-                <div style="font-size: 0.75rem; color: var(--text-dim);">ตามการปรับสไลเดอร์</div>
-              </div>
-              <div>
-                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.25rem;">เงินคงเหลือ Surplus ค่ารักษา</div>
-                <div style="font-size: 1.8rem; font-weight: 700; color: var(--emerald-400);" id="sim-res-surplus">+15,038 ฿</div>
-                <div style="font-size: 0.75rem; color: var(--text-dim);" id="sim-res-surplus-year">ปีละ 180,450 บาท</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </main>
 
   <footer class="app-footer">
@@ -1193,7 +1127,6 @@ document.addEventListener("DOMContentLoaded", () => {
   setupAgeFilters();
   renderAccumulationChart();
   renderBudgetSplitChart();
-  setupSimulator();
 });
 
 // Tab Switching
@@ -1495,57 +1428,6 @@ function renderBudgetSplitChart() {
       cutout: "60%"
     }
   });
-}
-
-// Simulator Logic
-function setupSimulator() {
-  const sliderLiving = document.getElementById("slider-living");
-  const sliderYield = document.getElementById("slider-yield");
-  const sliderPension = document.getElementById("slider-pension");
-
-  const valLiving = document.getElementById("val-living-exp");
-  const valYield = document.getElementById("val-portfolio-yield");
-  const valPension = document.getElementById("val-pension-income");
-
-  const resTotalIncome = document.getElementById("sim-res-total-income");
-  const resLiving = document.getElementById("sim-res-living");
-  const resSurplus = document.getElementById("sim-res-surplus");
-  const resSurplusYear = document.getElementById("sim-res-surplus-year");
-
-  function updateSim() {
-    const living = parseFloat(sliderLiving.value);
-    const yieldRate = parseFloat(sliderYield.value);
-    const pension = parseFloat(sliderPension.value);
-
-    valLiving.textContent = `${formatNumber(living)} ฿`;
-    valYield.textContent = `${yieldRate.toFixed(2)}%`;
-    valPension.textContent = `${formatNumber(pension)} ฿`;
-
-    // 21M personal capital (excluding 4M coop for mom)
-    const personalCapital = 21000000;
-    const monthlyInterest = (personalCapital * (yieldRate / 100)) / 12;
-    const totalPersonalIncome = monthlyInterest + pension;
-    const surplus = totalPersonalIncome - living;
-
-    resTotalIncome.textContent = `${formatNumber(Math.round(totalPersonalIncome))} ฿`;
-    resLiving.textContent = `${formatNumber(Math.round(living))} ฿`;
-    
-    if (surplus >= 0) {
-      resSurplus.textContent = `+${formatNumber(Math.round(surplus))} ฿`;
-      resSurplus.style.color = "var(--emerald-400)";
-      resSurplusYear.textContent = `ปีละ ${formatNumber(Math.round(surplus * 12))} บาท (รองรับเบี้ยสุขภาพได้สบาย)`;
-    } else {
-      resSurplus.textContent = `-${formatNumber(Math.round(Math.abs(surplus)))} ฿`;
-      resSurplus.style.color = "#ef4444"; // Red warning
-      resSurplusYear.textContent = `ขาดดุลปีละ ${formatNumber(Math.round(Math.abs(surplus) * 12))} บาท (ต้องดึงเงินต้นมาสมทบ)`;
-    }
-  }
-
-  sliderLiving.addEventListener("input", updateSim);
-  sliderYield.addEventListener("input", updateSim);
-  sliderPension.addEventListener("input", updateSim);
-
-  updateSim();
 }
 
 </script>

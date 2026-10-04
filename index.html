@@ -89,9 +89,6 @@
       <button class="tab-btn" data-target="tab-drawdown" role="tab" id="tab-btn-drawdown">
         🛡️ แผน Drawdown & ค่ารักษา
       </button>
-      <button class="tab-btn" data-target="tab-simulator" role="tab" id="tab-btn-simulator">
-        🧮 เครื่องคิดเลขจำลองการเงิน
-      </button>
     </nav>
 
     <!-- TAB 1: OVERVIEW -->
@@ -337,69 +334,6 @@
               • ทยอยไถ่ถอน Treasury MMF (4,000,000 บาท) และพันธบัตรรัฐบาล (6,500,000 บาท) ตามลำดับ<br>
               • เงินฝากพิเศษเกษียณสุข สอ.กฟผ. 5,000,000 บาท และทองคำแท่ง 5 บาท ทำหน้าที่เป็นปราการความมั่งคั่งด่านสุดท้ายของชีวิต
             </p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB 5: SIMULATOR -->
-    <div class="tab-content" id="tab-simulator" role="tabpanel">
-      <div class="dashboard-grid">
-        <div class="panel-card col-12">
-          <div class="panel-title-wrapper">
-            <div>
-              <h2 class="panel-title">Interactive Retirement Simulator</h2>
-              <p class="panel-subtitle">ทดลองปรับเปลี่ยนตัวแปรเพื่อดูความยืดหยุ่นของแผนการเงิน</p>
-            </div>
-          </div>
-
-          <div class="simulator-form">
-            <div class="form-group">
-              <div class="form-label">
-                <span>งบกินอยู่รายเดือนหลังเกษียณ</span>
-                <span id="val-living-exp" style="color: var(--emerald-400); font-weight: 700;">35,000 ฿</span>
-              </div>
-              <input type="range" class="slider-input" id="slider-living" min="20000" max="60000" step="1000" value="35000">
-              <span style="font-size: 0.75rem; color: var(--text-dim);">ปรับงบใช้จ่ายประจำวัน (เกณฑ์ปัจจุบัน 35k)</span>
-            </div>
-
-            <div class="form-group">
-              <div class="form-label">
-                <span>ผลตอบแทนเฉลี่ยพอร์ตเกษียณส่วนตัว (%/ปี)</span>
-                <span id="val-portfolio-yield" style="color: var(--cyan-500); font-weight: 700;">2.23%</span>
-              </div>
-              <input type="range" class="slider-input" id="slider-yield" min="1.5" max="5.0" step="0.01" value="2.23">
-              <span style="font-size: 0.75rem; color: var(--text-dim);">ผลตอบแทนสุทธิพอร์ตส่วนตัว 21M (เฉลี่ย 2.23%/ปี)</span>
-            </div>
-
-            <div class="form-group">
-              <div class="form-label">
-                <span>เงินบำนาญการันตี 3 ฉบับ (ต่อเดือน)</span>
-                <span id="val-pension-income" style="color: var(--gold-400); font-weight: 700;">11,033 ฿</span>
-              </div>
-              <input type="range" class="slider-input" id="slider-pension" min="5000" max="25000" step="500" value="11033">
-              <span style="font-size: 0.75rem; color: var(--text-dim);">กระแสเงินสดจากประกันบำนาญ (บำนาญเดิม+ใหม่+#3)</span>
-            </div>
-          </div>
-
-          <div class="sim-output-box">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; text-align: center;">
-              <div>
-                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.25rem;">กระแสเงินสดรับส่วนตัวรวม</div>
-                <div style="font-size: 1.8rem; font-weight: 700; color: var(--cyan-500);" id="sim-res-total-income">50,038 ฿</div>
-                <div style="font-size: 0.75rem; color: var(--text-dim);">ดอกเบี้ยพอร์ต 21M + บำนาญ 3 ฉบับ</div>
-              </div>
-              <div>
-                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.25rem;">งบกินอยู่รายเดือน</div>
-                <div style="font-size: 1.8rem; font-weight: 700; color: #ffffff;" id="sim-res-living">35,000 ฿</div>
-                <div style="font-size: 0.75rem; color: var(--text-dim);">ตามการปรับสไลเดอร์</div>
-              </div>
-              <div>
-                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.25rem;">เงินคงเหลือ Surplus ค่ารักษา</div>
-                <div style="font-size: 1.8rem; font-weight: 700; color: var(--emerald-400);" id="sim-res-surplus">+15,038 ฿</div>
-                <div style="font-size: 0.75rem; color: var(--text-dim);" id="sim-res-surplus-year">ปีละ 180,450 บาท</div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

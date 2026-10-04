@@ -108,7 +108,6 @@ document.addEventListener("DOMContentLoaded", () => {
   setupAgeFilters();
   renderAccumulationChart();
   renderBudgetSplitChart();
-  setupSimulator();
 });
 
 // Tab Switching
@@ -410,55 +409,4 @@ function renderBudgetSplitChart() {
       cutout: "60%"
     }
   });
-}
-
-// Simulator Logic
-function setupSimulator() {
-  const sliderLiving = document.getElementById("slider-living");
-  const sliderYield = document.getElementById("slider-yield");
-  const sliderPension = document.getElementById("slider-pension");
-
-  const valLiving = document.getElementById("val-living-exp");
-  const valYield = document.getElementById("val-portfolio-yield");
-  const valPension = document.getElementById("val-pension-income");
-
-  const resTotalIncome = document.getElementById("sim-res-total-income");
-  const resLiving = document.getElementById("sim-res-living");
-  const resSurplus = document.getElementById("sim-res-surplus");
-  const resSurplusYear = document.getElementById("sim-res-surplus-year");
-
-  function updateSim() {
-    const living = parseFloat(sliderLiving.value);
-    const yieldRate = parseFloat(sliderYield.value);
-    const pension = parseFloat(sliderPension.value);
-
-    valLiving.textContent = `${formatNumber(living)} ฿`;
-    valYield.textContent = `${yieldRate.toFixed(2)}%`;
-    valPension.textContent = `${formatNumber(pension)} ฿`;
-
-    // 21M personal capital (excluding 4M coop for mom)
-    const personalCapital = 21000000;
-    const monthlyInterest = (personalCapital * (yieldRate / 100)) / 12;
-    const totalPersonalIncome = monthlyInterest + pension;
-    const surplus = totalPersonalIncome - living;
-
-    resTotalIncome.textContent = `${formatNumber(Math.round(totalPersonalIncome))} ฿`;
-    resLiving.textContent = `${formatNumber(Math.round(living))} ฿`;
-    
-    if (surplus >= 0) {
-      resSurplus.textContent = `+${formatNumber(Math.round(surplus))} ฿`;
-      resSurplus.style.color = "var(--emerald-400)";
-      resSurplusYear.textContent = `ปีละ ${formatNumber(Math.round(surplus * 12))} บาท (รองรับเบี้ยสุขภาพได้สบาย)`;
-    } else {
-      resSurplus.textContent = `-${formatNumber(Math.round(Math.abs(surplus)))} ฿`;
-      resSurplus.style.color = "#ef4444"; // Red warning
-      resSurplusYear.textContent = `ขาดดุลปีละ ${formatNumber(Math.round(Math.abs(surplus) * 12))} บาท (ต้องดึงเงินต้นมาสมทบ)`;
-    }
-  }
-
-  sliderLiving.addEventListener("input", updateSim);
-  sliderYield.addEventListener("input", updateSim);
-  sliderPension.addEventListener("input", updateSim);
-
-  updateSim();
 }
