@@ -170,6 +170,8 @@
                 <tr>
                   <th>อายุ</th>
                   <th class="numeric">ฐานเงินเดือน</th>
+                  <th class="numeric" style="color: #60a5fa;">โบนัสประจำปี (~2 ด.)</th>
+                  <th class="numeric" style="color: #93c5fd;">รวมรายได้ต่อปี</th>
                   <th class="numeric">PVD 15%</th>
                   <th class="numeric">หุ้น สอ.กฟผ.</th>
                   <th class="numeric">RMF</th>
@@ -178,6 +180,7 @@
                   <th class="numeric" style="color: var(--cyan-500);">รวมหักเดือนประจำ</th>
                   <th class="numeric">บำนาญใหม่ (โบนัส)</th>
                   <th class="numeric" style="color: var(--emerald-400);">รวมจ่ายทั้งปี</th>
+                  <th class="numeric" style="color: #34d399;">เงินเหลือใช้สุทธิ/ปี</th>
                   <th>หมุดหมายสำคัญ</th>
                 </tr>
               </thead>
@@ -185,6 +188,37 @@
                 <!-- Dynamically populated -->
               </tbody>
             </table>
+          </div>
+
+          <!-- Milestone Notes Card -->
+          <div class="milestone-notes-card" style="margin-top: 1.5rem; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: var(--radius-md); padding: 1.25rem 1.5rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+              <span style="font-size: 1.15rem;">📌</span>
+              <h3 style="font-size: 1rem; font-weight: 600; color: var(--emerald-400);">บันทึกความหมายของปีหมุดหมายสำคัญ (แถบไฮไลท์สีเขียว):</h3>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 0.85rem; font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+              <div style="background: rgba(255, 255, 255, 0.02); padding: 0.65rem 0.85rem; border-radius: 8px; border-left: 3px solid var(--emerald-500);">
+                <strong style="color: #ffffff;">อายุ 42 ปี (เป้าหุ้น สอ. ครบ 4M):</strong> ส่งหุ้น สอ.กฟผ. ปีสุดท้าย สะสมเงินต้นครบ 4,000,000 บาท ตามเป้าหมาย
+              </div>
+              <div style="background: rgba(255, 255, 255, 0.02); padding: 0.65rem 0.85rem; border-radius: 8px; border-left: 3px solid var(--emerald-500);">
+                <strong style="color: #ffffff;">อายุ 43 ปี (จุดเปลี่ยนเริ่มให้แม่ & เร่งหุ้นโลก):</strong> หยุดส่งหุ้น สอ. นำปันผล 15,000 บ./ด. ไปดูแลคุณแม่ 100% และเร่ง RMF เป็น 24,000 บ./ด.
+              </div>
+              <div style="background: rgba(255, 255, 255, 0.02); padding: 0.65rem 0.85rem; border-radius: 8px; border-left: 3px solid var(--emerald-500);">
+                <strong style="color: #ffffff;">อายุ 48 ปี (เงินเดือนแตะเพดาน กฟผ.):</strong> เงินเดือนชนเพดาน 100,000 บาท ทำให้ PVD 15% ล็อกสูงสุด 15,000 บ./ด. คงที่ตลอดไป
+              </div>
+              <div style="background: rgba(255, 255, 255, 0.02); padding: 0.65rem 0.85rem; border-radius: 8px; border-left: 3px solid var(--emerald-500);">
+                <strong style="color: #ffffff;">อายุ 53 ปี (ภาระบำนาญชนยอดสูงสุด):</strong> เริ่มซื้อบำนาญ 85/5 ซ้อนกับบำนาญ #3 หักจากเงินโบนัสรวมสูงสุด 200,000 บ./ปี
+              </div>
+              <div style="background: rgba(255, 255, 255, 0.02); padding: 0.65rem 0.85rem; border-radius: 8px; border-left: 3px solid var(--emerald-500);">
+                <strong style="color: #ffffff;">อายุ 57 ปี (ปลดภาระประกันสะสมทรัพย์):</strong> ส่งเบี้ยสะสมทรัพย์และบำนาญ 85/5 งวดสุดท้าย ปลดภาระจ่ายประกัน (เตรียมรับเงินคืน 250k ตอนอายุ 58 และ 62)
+              </div>
+              <div style="background: rgba(255, 255, 255, 0.02); padding: 0.65rem 0.85rem; border-radius: 8px; border-left: 3px solid var(--emerald-500);">
+                <strong style="color: #ffffff;">อายุ 60 ปี (วันเกษียณอายุ กฟผ.):</strong> ส่งบำนาญเดิมงวดสุดท้าย + รับเงินชดเชยเกษียณ 400 วัน (~1,312,000 บ. สุทธิ) สินทรัพย์แตะ 25 ล้านบาท
+              </div>
+            </div>
+            <div style="margin-top: 0.75rem; font-size: 0.785rem; color: var(--text-dim);">
+              * ประมาณการรายได้ต่อปี คำนวณจากฐานเงินเดือน 12 เดือน + โบนัสประจำปีประมาณการ 2 เท่าของเงินเดือน (รวม 14 เดือน)
+            </div>
           </div>
         </div>
       </div>

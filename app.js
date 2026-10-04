@@ -222,12 +222,16 @@ function renderAccumulationTable(filterRange) {
 
   tbody.innerHTML = filtered.map(r => {
     const isSpecialYear = (r.age === 42 || r.age === 43 || r.age === 48 || r.age === 53 || r.age === 57 || r.age === 60);
-    const rowClass = isSpecialYear ? 'class="highlight-row"' : "";
+    const bonus = r.salary * 2;
+    const totalAnnualIncome = r.salary * 14;
+    const netSurplus = totalAnnualIncome - r.annualTot;
 
     return `
       <tr ${rowClass}>
         <td><strong>${r.age}</strong></td>
         <td class="numeric">${formatNumber(r.salary)}</td>
+        <td class="numeric" style="color: #60a5fa;">${formatNumber(bonus)}</td>
+        <td class="numeric" style="color: #93c5fd; font-weight: 600;">${formatNumber(totalAnnualIncome)}</td>
         <td class="numeric">${formatNumber(r.pvd)}</td>
         <td class="numeric">${r.coop > 0 ? formatNumber(r.coop) : '<span style="color:var(--text-dim);">-</span>'}</td>
         <td class="numeric">${formatNumber(r.rmf)}</td>
@@ -236,6 +240,7 @@ function renderAccumulationTable(filterRange) {
         <td class="numeric" style="color: var(--cyan-500); font-weight: 600;">${formatNumber(r.monthlyTot)}</td>
         <td class="numeric">${r.bonusPen > 0 ? formatNumber(r.bonusPen) : '<span style="color:var(--text-dim);">-</span>'}</td>
         <td class="numeric" style="color: var(--emerald-400); font-weight: 700;">${formatNumber(r.annualTot)}</td>
+        <td class="numeric" style="color: #34d399; font-weight: 600;">${formatNumber(netSurplus)}</td>
         <td class="note-cell">${r.note}</td>
       </tr>
     `;

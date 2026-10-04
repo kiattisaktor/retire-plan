@@ -3,12 +3,11 @@ from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 
 wb = openpyxl.Workbook()
-# Remove default sheet
 wb.remove(wb.active)
 
-# Color palettes
 NAVY_HEADER = "1B365D"
 EMERALD_HEADER = "0D5C3A"
+BLUE_HEADER = "1E3A8A"
 GOLD_ACCENT = "D4AF37"
 DARK_TEXT = "1A1A1A"
 LIGHT_BG = "F8FAFC"
@@ -18,14 +17,11 @@ WHITE = "FFFFFF"
 ACCENT_BLUE = "E0F2FE"
 ACCENT_GREEN = "DCFCE7"
 
-header_font = Font(name="Arial", size=11, bold=True, color=WHITE)
-sub_header_font = Font(name="Arial", size=10, bold=True, color="334155")
+header_font = Font(name="Arial", size=10, bold=True, color=WHITE)
 title_font = Font(name="Arial", size=16, bold=True, color=NAVY_HEADER)
 subtitle_font = Font(name="Arial", size=11, italic=True, color="64748B")
 bold_font = Font(name="Arial", size=10, bold=True, color=DARK_TEXT)
 normal_font = Font(name="Arial", size=10, color=DARK_TEXT)
-kpi_num_font = Font(name="Arial", size=18, bold=True, color=EMERALD_HEADER)
-kpi_label_font = Font(name="Arial", size=10, bold=True, color="475569")
 
 thin_border = Border(
     left=Side(style="thin", color=BORDER_GRAY),
@@ -46,26 +42,27 @@ total_border = Border(
 ws1 = wb.create_sheet(title="1_แผนสะสมเงิน 38-60 ปี")
 ws1.views.sheetView[0].showGridLines = True
 
-# Title block
-ws1["B2"] = "แผนการออม การลงทุน และชำระเบี้ยประกัน สู่เป้าหมายเกษียณ 25 ล้านบาท"
+ws1["B2"] = "แผนการออม การลงทุน และรายได้ สู่เป้าหมายเกษียณ 25 ล้านบาท"
 ws1["B2"].font = title_font
-ws1["B3"] = "พนักงาน กฟผ. ช่วงอายุ 38 - 60 ปี (รวม 23 ปี) | แผนจัดสรรแบบผสมผสาน (Hybrid Blueprint)"
+ws1["B3"] = "พนักงาน กฟผ. ช่วงอายุ 38 - 60 ปี (รวม 23 ปี) | คำนวณรายได้จากเงินเดือน + โบนัส 2 เดือน"
 ws1["B3"].font = subtitle_font
 
-# Headers
 headers1 = [
     ("ลำดับ", 6),
     ("อายุ (ปี)", 10),
     ("ฐานเงินเดือน (บาท)", 16),
+    ("โบนัสประจำปี (~2 ด.)", 18),
+    ("รวมรายได้ต่อปี (บาท)", 20),
     ("PVD สะสม 15% (บ./ด.)", 18),
     ("หุ้น สอ.กฟผ. (บ./ด.)", 18),
     ("กองทุน RMF (บ./ด.)", 16),
-    ("ประกันเดิม 3 ฉบับ (บ./ด.)", 20),
-    ("ฝากพิเศษ สอ. (บ./ด.)", 18),
-    ("รวมหักเงินเดือนประจำ (บ./ด.)", 22),
-    ("บำนาญใหม่ หักโบนัส (บ./ปี)", 22),
-    ("รวมภาระจ่ายทั้งปี (บ./ปี)", 22),
-    ("หมายเหตุสำคัญ / Strategic Action", 40)
+    ("ประกันเดิม 3 ฉบับ (บ./ด.)", 18),
+    ("ฝากพิเศษ สอ. (บ./ด.)", 16),
+    ("รวมหักเงินเดือนประจำ", 20),
+    ("บำนาญใหม่ (โบนัส)", 18),
+    ("รวมจ่ายทั้งปี (บาท)", 20),
+    ("เงินเหลือใช้สุทธิ/ปี", 20),
+    ("หมุดหมายสำคัญ / Strategic Action", 40)
 ]
 
 start_row = 5
@@ -78,7 +75,6 @@ for col_idx, (h_text, width) in enumerate(headers1, start=2):
 
 ws1.row_dimensions[start_row].height = 36
 
-# Data rows
 raw_data_s1 = [
     (1, 38, 63000, 20000, 2000, 9583, 0, 0, "เริ่มแผน: สอ. 20k/ด. ล็อกเป้า 4M, RMF 2k/ด., PVD 15%"),
     (2, 39, 66150, 20000, 2000, 9583, 0, 0, "ฐานเงินเดือนโต 5% ต่อปี"),
@@ -112,6 +108,11 @@ for row_idx, r in enumerate(raw_data_s1, start=6):
     
     seq, age, salary, coop, rmf, ins_orig, coop_spec, bonus_pen, note = r
     
+    # Check milestone highlight
+    is_milestone = age in [42, 43, 48, 53, 57, 60]
+    if is_milestone:
+        fill = PatternFill(start_color="ECFDF5", end_color="ECFDF5", fill_type="solid")
+    
     # Col B: Seq
     c = ws1.cell(row=row_idx, column=2, value=seq)
     c.alignment = Alignment(horizontal="center", vertical="center")
@@ -120,7 +121,8 @@ for row_idx, r in enumerate(raw_data_s1, start=6):
     # Col C: Age
     c = ws1.cell(row=row_idx, column=3, value=age)
     c.alignment = Alignment(horizontal="center", vertical="center")
-    c.font = bold_font; c.fill = fill; c.border = thin_border
+    c.font = Font(name="Arial", size=10, bold=True, color=EMERALD_HEADER if is_milestone else DARK_TEXT)
+    c.fill = fill; c.border = thin_border
     
     # Col D: Salary
     c = ws1.cell(row=row_idx, column=4, value=salary)
@@ -128,59 +130,80 @@ for row_idx, r in enumerate(raw_data_s1, start=6):
     c.alignment = Alignment(horizontal="right", vertical="center")
     c.font = normal_font; c.fill = fill; c.border = thin_border
     
-    # Col E: PVD 15% (Formula: Salary * 15%)
-    c = ws1.cell(row=row_idx, column=5, value=f"=ROUND(D{row_idx}*0.15, 0)")
+    # Col E: Bonus (~2 months)
+    c = ws1.cell(row=row_idx, column=5, value=f"=D{row_idx}*2")
+    c.number_format = "#,##0"
+    c.alignment = Alignment(horizontal="right", vertical="center")
+    c.font = Font(name="Arial", size=10, color="2563EB")
+    c.fill = fill; c.border = thin_border
+    
+    # Col F: Total Annual Income = Salary*12 + Bonus
+    c = ws1.cell(row=row_idx, column=6, value=f"=D{row_idx}*12+E{row_idx}")
+    c.number_format = "#,##0"
+    c.alignment = Alignment(horizontal="right", vertical="center")
+    c.font = Font(name="Arial", size=10, bold=True, color="1E40AF")
+    c.fill = fill; c.border = thin_border
+    
+    # Col G: PVD 15%
+    c = ws1.cell(row=row_idx, column=7, value=f"=ROUND(D{row_idx}*0.15, 0)")
     c.number_format = "#,##0"
     c.alignment = Alignment(horizontal="right", vertical="center")
     c.font = normal_font; c.fill = fill; c.border = thin_border
     
-    # Col F: Coop
-    c = ws1.cell(row=row_idx, column=6, value=coop)
+    # Col H: Coop
+    c = ws1.cell(row=row_idx, column=8, value=coop)
     c.number_format = "#,##0"
     c.alignment = Alignment(horizontal="right", vertical="center")
     c.font = normal_font; c.fill = fill; c.border = thin_border
     
-    # Col G: RMF
-    c = ws1.cell(row=row_idx, column=7, value=rmf)
+    # Col I: RMF
+    c = ws1.cell(row=row_idx, column=9, value=rmf)
     c.number_format = "#,##0"
     c.alignment = Alignment(horizontal="right", vertical="center")
     c.font = normal_font; c.fill = fill; c.border = thin_border
     
-    # Col H: Ins Original
-    c = ws1.cell(row=row_idx, column=8, value=ins_orig)
+    # Col J: Ins Original
+    c = ws1.cell(row=row_idx, column=10, value=ins_orig)
     c.number_format = "#,##0"
     c.alignment = Alignment(horizontal="right", vertical="center")
     c.font = normal_font; c.fill = fill; c.border = thin_border
     
-    # Col I: Coop Special
-    c = ws1.cell(row=row_idx, column=9, value=coop_spec)
+    # Col K: Coop Special
+    c = ws1.cell(row=row_idx, column=11, value=coop_spec)
     c.number_format = "#,##0"
     c.alignment = Alignment(horizontal="right", vertical="center")
     c.font = normal_font; c.fill = fill; c.border = thin_border
     
-    # Col J: Total Monthly Deductions = SUM(E:I)
-    c = ws1.cell(row=row_idx, column=10, value=f"=SUM(E{row_idx}:I{row_idx})")
+    # Col L: Total Monthly Deductions = SUM(G:K)
+    c = ws1.cell(row=row_idx, column=12, value=f"=SUM(G{row_idx}:K{row_idx})")
     c.number_format = "#,##0"
     c.alignment = Alignment(horizontal="right", vertical="center")
     c.font = bold_font; c.fill = PatternFill(start_color=ACCENT_BLUE, end_color=ACCENT_BLUE, fill_type="solid")
     c.border = thin_border
     
-    # Col K: Bonus Pension Annual
-    c = ws1.cell(row=row_idx, column=11, value=bonus_pen)
+    # Col M: Bonus Pension Annual
+    c = ws1.cell(row=row_idx, column=13, value=bonus_pen)
     c.number_format = "#,##0"
     c.alignment = Alignment(horizontal="right", vertical="center")
     c.font = normal_font; c.fill = fill; c.border = thin_border
     
-    # Col L: Total Annual Payment = J*12 + K
-    c = ws1.cell(row=row_idx, column=12, value=f"=J{row_idx}*12+K{row_idx}")
+    # Col N: Total Annual Payment = L*12 + M
+    c = ws1.cell(row=row_idx, column=14, value=f"=L{row_idx}*12+M{row_idx}")
     c.number_format = "#,##0"
     c.alignment = Alignment(horizontal="right", vertical="center")
     c.font = Font(name="Arial", size=10, bold=True, color=EMERALD_HEADER)
     c.fill = PatternFill(start_color=ACCENT_GREEN, end_color=ACCENT_GREEN, fill_type="solid")
     c.border = thin_border
     
-    # Col M: Notes
-    c = ws1.cell(row=row_idx, column=13, value=note)
+    # Col O: Net Disposable Income = F - N
+    c = ws1.cell(row=row_idx, column=15, value=f"=F{row_idx}-N{row_idx}")
+    c.number_format = "#,##0"
+    c.alignment = Alignment(horizontal="right", vertical="center")
+    c.font = Font(name="Arial", size=10, bold=True, color="047857")
+    c.fill = fill; c.border = thin_border
+    
+    # Col P: Notes
+    c = ws1.cell(row=row_idx, column=16, value=note)
     c.alignment = Alignment(horizontal="left", vertical="center")
     c.font = normal_font; c.fill = fill; c.border = thin_border
 
@@ -193,26 +216,46 @@ ws1.cell(row=tot_row, column=3).alignment = Alignment(horizontal="center", verti
 ws1.cell(row=tot_row, column=3).border = total_border
 
 ws1.cell(row=tot_row, column=4, value=f"=SUM(D6:D{tot_row-1})").number_format = "#,##0"
-ws1.cell(row=tot_row, column=5, value=f"=SUM(E6:E{tot_row-1})*12").number_format = "#,##0"
-ws1.cell(row=tot_row, column=6, value=f"=SUM(F6:F{tot_row-1})*12").number_format = "#,##0"
+ws1.cell(row=tot_row, column=5, value=f"=SUM(E6:E{tot_row-1})").number_format = "#,##0"
+ws1.cell(row=tot_row, column=6, value=f"=SUM(F6:F{tot_row-1})").number_format = "#,##0"
 ws1.cell(row=tot_row, column=7, value=f"=SUM(G6:G{tot_row-1})*12").number_format = "#,##0"
 ws1.cell(row=tot_row, column=8, value=f"=SUM(H6:H{tot_row-1})*12").number_format = "#,##0"
 ws1.cell(row=tot_row, column=9, value=f"=SUM(I6:I{tot_row-1})*12").number_format = "#,##0"
-ws1.cell(row=tot_row, column=10, value="-").alignment = Alignment(horizontal="center", vertical="center")
-ws1.cell(row=tot_row, column=11, value=f"=SUM(K6:K{tot_row-1})").number_format = "#,##0"
-ws1.cell(row=tot_row, column=12, value=f"=SUM(L6:L{tot_row-1})").number_format = "#,##0"
-ws1.cell(row=tot_row, column=13, value="ยอดชำระสะสมตลอด 23 ปี เพื่อสร้างพอร์ต 25 ล้านบาท + ทองคำ 5 บาท").font = italic_font = Font(name="Arial", size=10, italic=True)
+ws1.cell(row=tot_row, column=10, value=f"=SUM(J6:J{tot_row-1})*12").number_format = "#,##0"
+ws1.cell(row=tot_row, column=11, value=f"=SUM(K6:K{tot_row-1})*12").number_format = "#,##0"
+ws1.cell(row=tot_row, column=12, value="-").alignment = Alignment(horizontal="center", vertical="center")
+ws1.cell(row=tot_row, column=13, value=f"=SUM(M6:M{tot_row-1})").number_format = "#,##0"
+ws1.cell(row=tot_row, column=14, value=f"=SUM(N6:N{tot_row-1})").number_format = "#,##0"
+ws1.cell(row=tot_row, column=15, value=f"=SUM(O6:O{tot_row-1})").number_format = "#,##0"
+ws1.cell(row=tot_row, column=16, value="ยอดรวมสะสมตลอด 23 ปี สู่เป้าหมาย 25 ล้านบาท").font = Font(name="Arial", size=10, italic=True)
 
-for col in range(2, 14):
+for col in range(2, 17):
     cell = ws1.cell(row=tot_row, column=col)
     cell.font = bold_font
     cell.fill = PatternFill(start_color="FEF3C7", end_color="FEF3C7", fill_type="solid")
     cell.border = total_border
-    if col in [4, 5, 6, 7, 8, 9, 11, 12]:
+    if col in [4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15]:
         cell.alignment = Alignment(horizontal="right", vertical="center")
 
+# Milestone Notes section below the table in Excel
+note_start = tot_row + 2
+ws1.cell(row=note_start, column=3, value="📌 บันทึกความหมายของปีหมุดหมายสำคัญ (แถบไฮไลท์สีเขียว):").font = Font(name="Arial", size=11, bold=True, color=EMERALD_HEADER)
+milestone_notes_excel = [
+    ("อายุ 42 ปี", "ส่งหุ้น สอ.กฟผ. ปีสุดท้าย สะสมเงินต้นครบ 4,000,000 บาท ตามเป้าหมาย"),
+    ("อายุ 43 ปี", "จุดเปลี่ยนกลยุทธ์ (Pivot Year) หยุดส่งหุ้น สอ. นำปันผล 15k/ด. โอนให้แม่ 100% และเร่ง RMF เป็น 24,000 บ./ด."),
+    ("อายุ 48 ปี", "ฐานเงินเดือน กฟผ. แตะเพดาน 100,000 บาท ทำให้ PVD 15% ล็อกสูงสุด 15,000 บ./ด. คงที่ตลอดไป"),
+    ("อายุ 53 ปี", "ภาระบำนาญชนยอดสูงสุด ซื้อบำนาญ 85/5 ซ้อนกับบำนาญ #3 หักจากเงินโบนัสรวมสูงสุด 200,000 บ./ปี"),
+    ("อายุ 57 ปี", "ส่งเบี้ยสะสมทรัพย์และบำนาญ 85/5 งวดสุดท้าย ปลดภาระจ่ายประกัน (เตรียมรับเงินคืน 250k ตอนอายุ 58 และ 62)"),
+    ("อายุ 60 ปี", "วันเกษียณอายุ กฟผ. ส่งบำนาญเดิมงวดสุดท้าย + รับเงินชดเชยเกษียณ 400 วัน (~1.312M สุทธิ) สินทรัพย์แตะ 25 ล้านบาท")
+]
+
+for idx, (yr, desc) in enumerate(milestone_notes_excel, start=note_start+1):
+    ws1.cell(row=idx, column=3, value=yr).font = bold_font
+    ws1.cell(row=idx, column=3).alignment = Alignment(horizontal="center", vertical="center")
+    ws1.cell(row=idx, column=4, value=desc).font = normal_font
+
 # -------------------------------------------------------------
-# SHEET 2: โครงสร้าง 6 ตะกร้า 25 ล้าน (Portfolio Structure)
+# SHEET 2: โครงสร้าง 6 ตะกร้า 25 ล้าน
 # -------------------------------------------------------------
 ws2 = wb.create_sheet(title="2_โครงสร้าง 6 ตะกร้า 25 ล้าน")
 ws2.views.sheetView[0].showGridLines = True
@@ -256,63 +299,36 @@ for idx, b in enumerate(baskets_data, start=6):
     ws2.row_dimensions[idx].height = 24
     bg_color = ZEBRA_BG if idx % 2 == 0 else WHITE
     fill = PatternFill(start_color=bg_color, end_color=bg_color, fill_type="solid")
-    
     b_no, name, principal, rate, tax_info, role = b
     
-    # Col B: No
-    c = ws2.cell(row=idx, column=2, value=b_no)
-    c.alignment = Alignment(horizontal="center", vertical="center")
+    ws2.cell(row=idx, column=2, value=b_no).alignment = Alignment(horizontal="center", vertical="center")
+    ws2.cell(row=idx, column=2).font = bold_font; ws2.cell(row=idx, column=2).fill = fill; ws2.cell(row=idx, column=2).border = thin_border
+    
+    ws2.cell(row=idx, column=3, value=name).font = bold_font; ws2.cell(row=idx, column=3).fill = fill; ws2.cell(row=idx, column=3).border = thin_border
+    
+    c = ws2.cell(row=idx, column=4, value=principal); c.number_format = "#,##0"; c.alignment = Alignment(horizontal="right", vertical="center")
     c.font = bold_font; c.fill = fill; c.border = thin_border
     
-    # Col C: Name
-    c = ws2.cell(row=idx, column=3, value=name)
-    c.alignment = Alignment(horizontal="left", vertical="center")
-    c.font = bold_font; c.fill = fill; c.border = thin_border
-    
-    # Col D: Principal
-    c = ws2.cell(row=idx, column=4, value=principal)
-    c.number_format = "#,##0"
-    c.alignment = Alignment(horizontal="right", vertical="center")
-    c.font = bold_font; c.fill = fill; c.border = thin_border
-    
-    # Col E: Ratio = Principal / Total
-    c = ws2.cell(row=idx, column=5, value=f"=D{idx}/D12")
-    c.number_format = "0.0%"
-    c.alignment = Alignment(horizontal="right", vertical="center")
+    c = ws2.cell(row=idx, column=5, value=f"=D{idx}/D12"); c.number_format = "0.0%"; c.alignment = Alignment(horizontal="right", vertical="center")
     c.font = normal_font; c.fill = fill; c.border = thin_border
     
-    # Col F: Net Rate
-    c = ws2.cell(row=idx, column=6, value=rate)
-    c.number_format = "0.000%"
-    c.alignment = Alignment(horizontal="right", vertical="center")
+    c = ws2.cell(row=idx, column=6, value=rate); c.number_format = "0.000%"; c.alignment = Alignment(horizontal="right", vertical="center")
     c.font = normal_font; c.fill = fill; c.border = thin_border
     
-    # Col G: Cash Flow Annual = Principal * Rate
-    c = ws2.cell(row=idx, column=7, value=f"=ROUND(D{idx}*F{idx}, 0)")
-    c.number_format = "#,##0"
-    c.alignment = Alignment(horizontal="right", vertical="center")
+    c = ws2.cell(row=idx, column=7, value=f"=ROUND(D{idx}*F{idx}, 0)"); c.number_format = "#,##0"; c.alignment = Alignment(horizontal="right", vertical="center")
     c.font = normal_font; c.fill = fill; c.border = thin_border
     
-    # Col H: Cash Flow Monthly = Annual / 12
-    c = ws2.cell(row=idx, column=8, value=f"=ROUND(G{idx}/12, 0)")
-    c.number_format = "#,##0"
-    c.alignment = Alignment(horizontal="right", vertical="center")
-    c.font = Font(name="Arial", size=10, bold=True, color=EMERALD_HEADER)
-    c.fill = PatternFill(start_color=ACCENT_GREEN, end_color=ACCENT_GREEN, fill_type="solid")
-    c.border = thin_border
+    c = ws2.cell(row=idx, column=8, value=f"=ROUND(G{idx}/12, 0)"); c.number_format = "#,##0"; c.alignment = Alignment(horizontal="right", vertical="center")
+    c.font = Font(name="Arial", size=10, bold=True, color=EMERALD_HEADER); c.fill = PatternFill(start_color=ACCENT_GREEN, end_color=ACCENT_GREEN, fill_type="solid"); c.border = thin_border
     
-    # Col I: Role
-    c = ws2.cell(row=idx, column=9, value=f"{role} ({tax_info})")
-    c.alignment = Alignment(horizontal="left", vertical="center")
-    c.font = normal_font; c.fill = fill; c.border = thin_border
+    c = ws2.cell(row=idx, column=9, value=f"{role} ({tax_info})"); c.font = normal_font; c.fill = fill; c.border = thin_border
 
 # Total Row
 tot_b_row = 12
 ws2.row_dimensions[tot_b_row].height = 26
 ws2.cell(row=tot_b_row, column=2, value="").border = total_border
 ws2.cell(row=tot_b_row, column=3, value="รวมพอร์ตสินทรัพย์ 6 ตะกร้า").font = bold_font
-ws2.cell(row=tot_b_row, column=3).alignment = Alignment(horizontal="center", vertical="center")
-ws2.cell(row=tot_b_row, column=3).border = total_border
+ws2.cell(row=tot_b_row, column=3).alignment = Alignment(horizontal="center", vertical="center"); ws2.cell(row=tot_b_row, column=3).border = total_border
 
 ws2.cell(row=tot_b_row, column=4, value=f"=SUM(D6:D11)").number_format = "#,##0"
 ws2.cell(row=tot_b_row, column=5, value=f"=SUM(E6:E11)").number_format = "0.0%"
@@ -323,9 +339,7 @@ ws2.cell(row=tot_b_row, column=9, value="ผลิตกระแสเงิน
 
 for col in range(2, 10):
     cell = ws2.cell(row=tot_b_row, column=col)
-    cell.font = bold_font
-    cell.fill = PatternFill(start_color="FEF3C7", end_color="FEF3C7", fill_type="solid")
-    cell.border = total_border
+    cell.font = bold_font; cell.fill = PatternFill(start_color="FEF3C7", end_color="FEF3C7", fill_type="solid"); cell.border = total_border
     if col in [4, 5, 6, 7, 8]:
         cell.alignment = Alignment(horizontal="right", vertical="center")
 
@@ -339,12 +353,11 @@ ws2.cell(row=gold_row, column=5, value="-").alignment = Alignment(horizontal="ce
 ws2.cell(row=gold_row, column=6, value="-").alignment = Alignment(horizontal="center", vertical="center")
 ws2.cell(row=gold_row, column=7, value="-").alignment = Alignment(horizontal="center", vertical="center")
 ws2.cell(row=gold_row, column=8, value="-").alignment = Alignment(horizontal="center", vertical="center")
-ws2.cell(row=gold_row, column=9, value="Wealth Buffer สินทรัพย์สำรองพิเศษฉุกเฉิน ถือครองแยก 100%").font = italic_font
+ws2.cell(row=gold_row, column=9, value="Wealth Buffer สินทรัพย์สำรองพิเศษฉุกเฉิน ถือครองแยก 100%").font = Font(name="Arial", size=10, italic=True)
 
 for col in range(2, 10):
     cell = ws2.cell(row=gold_row, column=col)
-    cell.fill = PatternFill(start_color="FFFBEB", end_color="FFFBEB", fill_type="solid")
-    cell.border = thin_border
+    cell.fill = PatternFill(start_color="FFFBEB", end_color="FFFBEB", fill_type="solid"); cell.border = thin_border
 
 # -------------------------------------------------------------
 # SHEET 3: กระแสเงินสดหลังเกษียณ (Dual Cash Flow & Drawdown)
@@ -357,7 +370,6 @@ ws3["B2"].font = title_font
 ws3["B3"] = "ท่อที่ 1 คุณแม่ (15,000 บ./ด.) | ท่อที่ 2 ส่วนตัวคุณ (52,291 บ./ด.) พร้อมแผน Drawdown ปลอดภัย"
 ws3["B3"].font = subtitle_font
 
-# Section 1: Dual Pipelines Table
 ws3["B5"] = "1. ท่อกระแสเงินสดรายเดือนหลังอายุ 60 ปี (Dual Cash Flow Pipelines)"
 ws3["B5"].font = Font(name="Arial", size=12, bold=True, color=NAVY_HEADER)
 
@@ -400,7 +412,6 @@ for idx, item in enumerate(cf_pipeline_data, start=7):
         ws3.cell(row=idx, column=c).border = thin_border
         ws3.cell(row=idx, column=c).fill = PatternFill(start_color=WHITE, end_color=WHITE, fill_type="solid")
 
-# Total Pipeline Row
 tot_pipe_row = 12
 ws3.row_dimensions[tot_pipe_row].height = 26
 ws3.cell(row=tot_pipe_row, column=2, value="รวมกระแสเงินสดรับส่วนตัวสุทธิ (ท่อที่ 2)").font = bold_font
@@ -492,4 +503,4 @@ for idx, item in enumerate(drawdown_data, start=22):
 
 output_file = "/Users/tor/retire-plan/Retirement_Plan_25M.xlsx"
 wb.save(output_file)
-print(f"Excel created successfully at {output_file}")
+print(f"Updated Excel saved at {output_file}")
