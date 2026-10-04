@@ -3,13 +3,13 @@ const BASKETS_DATA = [
   {
     no: 1,
     name: "เงินฝากพิเศษเกษียณสุข สอ.กฟผ.",
-    amount: 6000000,
-    rate: 3.75,
+    amount: 5000000,
+    rate: 3.50,
     tax: "ปลอดภาษี",
-    annualIncome: 225000,
-    monthlyIncome: 18750,
+    annualIncome: 175000,
+    monthlyIncome: 14583,
     color: "#10b981", // Emerald
-    role: "เครื่องจักรผลิตดอกเบี้ยหลัก ปลอดภัยสูง"
+    role: "โยกจาก PVD สูงสุด 5 ล้านบาท ภายใน 60 วัน (3.5% ปลอดภาษี)"
   },
   {
     no: 2,
@@ -25,13 +25,13 @@ const BASKETS_DATA = [
   {
     no: 3,
     name: "พันธบัตรรัฐบาล / วอลเล็ต สบม.",
-    amount: 5500000,
+    amount: 6500000,
     rate: 2.295,
     tax: "หลังหักภาษี 15%",
-    annualIncome: 126225,
-    monthlyIncome: 10519,
+    annualIncome: 149175,
+    monthlyIncome: 12431,
     color: "#06b6d4", // Cyan
-    role: "ล็อกผลตอบแทนระยะยาว ไร้ความเสี่ยงผิดนัด"
+    role: "ล็อกผลตอบแทนระยะยาว ไร้ความเสี่ยงผิดนัด (เพิ่ม 1 ล้าน)"
   },
   {
     no: 4,
@@ -86,12 +86,12 @@ const ACCUMULATION_DATA = [
   { age: 52, salary: 100000, pvd: 15000, coop: 0, rmf: 16000, ins: 11500, coopSpec: 0, monthlyTot: 42500, bonusPen: 100000, annualTot: 610000, note: "บำนาญใหม่ #3 (3/5)" },
   { age: 53, salary: 100000, pvd: 15000, coop: 0, rmf: 16000, ins: 11500, coopSpec: 0, monthlyTot: 42500, bonusPen: 200000, annualTot: 710000, note: "ซื้อบำนาญ 85/5 (1/5) ซ้อนบำนาญ #3 (4/5) รวมโบนัส 200k/ปี" },
   { age: 54, salary: 100000, pvd: 15000, coop: 0, rmf: 16000, ins: 11500, coopSpec: 0, monthlyTot: 42500, bonusPen: 200000, annualTot: 710000, note: "บำนาญ 85/5 (2/5) + บำนาญ #3 (5/5 งวดสุดท้าย) รวม 200k/ปี" },
-  { age: 55, salary: 100000, pvd: 15000, coop: 0, rmf: 16000, ins: 11500, coopSpec: 10000, monthlyTot: 52500, bonusPen: 100000, annualTot: 730000, note: "สับ PVD+RMF เข้าตราสารหนี้ | ฝากพิเศษ สอ. 10k/ด. | บำนาญ 85/5 (3/5)" },
-  { age: 56, salary: 100000, pvd: 15000, coop: 0, rmf: 16000, ins: 12500, coopSpec: 10000, monthlyTot: 53500, bonusPen: 100000, annualTot: 742000, note: "บำนาญ 85/5 (4/5) | ปรับเบี้ยสุขภาพช่วง 56-60 | ฝากพิเศษ 10k/ด." },
-  { age: 57, salary: 100000, pvd: 15000, coop: 0, rmf: 16000, ins: 12500, coopSpec: 10000, monthlyTot: 53500, bonusPen: 100000, annualTot: 742000, note: "ส่งสะสมทรัพย์งวดสุดท้าย | บำนาญ 85/5 งวดสุดท้าย (5/5)" },
-  { age: 58, salary: 100000, pvd: 15000, coop: 0, rmf: 16000, ins: 9167, coopSpec: 10000, monthlyTot: 50167, bonusPen: 0, annualTot: 602004, note: "รับเงินคืนสะสมทรัพย์ 250k เข้า e-Savings เหลือส่งบำนาญเดิม+สุขภาพ" },
-  { age: 59, salary: 100000, pvd: 15000, coop: 0, rmf: 16000, ins: 9167, coopSpec: 10000, monthlyTot: 50167, bonusPen: 0, annualTot: 602004, note: "เตรียมความพร้อมก่อนเกษียณ 1 ปี" },
-  { age: 60, salary: 100000, pvd: 15000, coop: 0, rmf: 16000, ins: 9167, coopSpec: 10000, monthlyTot: 50167, bonusPen: 0, annualTot: 602004, note: "ปีเกษียณ: ส่งบำนาญเดิมงวดสุดท้าย + รับเงินชดเชย 400 วัน 1.312M" }
+  { age: 55, salary: 100000, pvd: 15000, coop: 0, rmf: 16000, ins: 11500, coopSpec: 0, monthlyTot: 42500, bonusPen: 100000, annualTot: 610000, note: "สับ PVD+RMF เข้าตราสารหนี้ | บำนาญ 85/5 (3/5) | เงินเดือนเหลือใช้เต็มที่" },
+  { age: 56, salary: 100000, pvd: 15000, coop: 0, rmf: 16000, ins: 12500, coopSpec: 0, monthlyTot: 43500, bonusPen: 100000, annualTot: 622000, note: "บำนาญ 85/5 (4/5) | ปรับเบี้ยสุขภาพช่วง 56-60" },
+  { age: 57, salary: 100000, pvd: 15000, coop: 0, rmf: 16000, ins: 12500, coopSpec: 0, monthlyTot: 43500, bonusPen: 100000, annualTot: 622000, note: "ส่งสะสมทรัพย์งวดสุดท้าย | บำนาญ 85/5 งวดสุดท้าย (5/5)" },
+  { age: 58, salary: 100000, pvd: 15000, coop: 0, rmf: 16000, ins: 9167, coopSpec: 0, monthlyTot: 40167, bonusPen: 0, annualTot: 482004, note: "รับเงินคืนสะสมทรัพย์ 250k เข้า e-Savings เหลือส่งบำนาญเดิม+สุขภาพ" },
+  { age: 59, salary: 100000, pvd: 15000, coop: 0, rmf: 16000, ins: 9167, coopSpec: 0, monthlyTot: 40167, bonusPen: 0, annualTot: 482004, note: "เตรียมความพร้อมก่อนเกษียณ 1 ปี" },
+  { age: 60, salary: 100000, pvd: 15000, coop: 0, rmf: 16000, ins: 9167, coopSpec: 0, monthlyTot: 40167, bonusPen: 0, annualTot: 482004, note: "ปีเกษียณ: โยก PVD 5M เข้าฝากพิเศษ สอ. ใน 60 วัน + รับเงินชดเชย 400 วัน 1.312M" }
 ];
 
 // Utility: format numbers with commas
@@ -222,6 +222,7 @@ function renderAccumulationTable(filterRange) {
 
   tbody.innerHTML = filtered.map(r => {
     const isSpecialYear = (r.age === 42 || r.age === 43 || r.age === 48 || r.age === 53 || r.age === 57 || r.age === 60);
+    const rowClass = isSpecialYear ? 'class="highlight-row"' : "";
     const bonus = r.salary * 2;
     const totalAnnualIncome = r.salary * 14;
     const netSurplus = totalAnnualIncome - r.annualTot;
@@ -271,7 +272,6 @@ function renderAccumulationChart() {
   const coopData = ACCUMULATION_DATA.map(d => d.coop * 12);
   const rmfData = ACCUMULATION_DATA.map(d => d.rmf * 12);
   const insData = ACCUMULATION_DATA.map(d => d.ins * 12);
-  const coopSpecData = ACCUMULATION_DATA.map(d => d.coopSpec * 12);
   const bonusPenData = ACCUMULATION_DATA.map(d => d.bonusPen);
 
   accumulationChartInstance = new Chart(ctx, {
@@ -301,12 +301,6 @@ function renderAccumulationChart() {
           label: "ประกันเดิม 3 ฉบับ",
           data: insData,
           backgroundColor: "#8b5cf6",
-          stack: "Stack 0"
-        },
-        {
-          label: "ฝากพิเศษ สอ.",
-          data: coopSpecData,
-          backgroundColor: "#ec4899",
           stack: "Stack 0"
         },
         {
@@ -346,7 +340,7 @@ function renderAccumulationChart() {
             footer: function(items) {
               let total = 0;
               items.forEach(item => { total += item.parsed.y; });
-              return `รวมทั้งปี: ${formatNumber(total)} บาท`;
+              return `รวมจ่ายทั้งปี: ${formatNumber(total)} บาท`;
             }
           }
         }
@@ -383,7 +377,7 @@ function renderBudgetSplitChart() {
     data: {
       labels: ["งบกินอยู่ประจำวัน", "งบส่วนเกินรองรับเบี้ยสุขภาพ (Surplus)"],
       datasets: [{
-        data: [35000, 17291],
+        data: [35000, 15038],
         backgroundColor: ["#3b82f6", "#10b981"],
         borderWidth: 2,
         borderColor: "#0f172a"
@@ -408,7 +402,7 @@ function renderBudgetSplitChart() {
           callbacks: {
             label: function(context) {
               const val = context.parsed;
-              const pct = ((val / 52291) * 100).toFixed(1);
+              const pct = ((val / 50038) * 100).toFixed(1);
               return ` ${context.label}: ${formatNumber(val)} ฿/ด. (${pct}%)`;
             }
           }
